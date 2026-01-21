@@ -1,3 +1,5 @@
-# erste_flutter_app
+# Flutter Starter Template
 
-A new Flutter project.
+Starter template für neues Flutter Projekt für GitGub Classroom.
+
+A. Eckhart
