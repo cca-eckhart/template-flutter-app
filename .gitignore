@@ -1,45 +1,59 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
-
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
+# --- Flutter/Dart ---
 .dart_tool/
-.flutter-plugins-dependencies
+.packages
 .pub-cache/
 .pub/
-/build/
-/coverage/
+build/
+# Wir ignorieren die lock-Datei im Template, damit Schüler immer frisch starten
+pubspec.lock
 
-# Symbolication related
-app.*.symbols
+# --- Android ---
+.gradle/
+local.properties
+**/AndroidManifest.xml.bin
+**/AndroidManifest.xml.out
+**/res/raw/
+*.apk
+*.aar
+*.bundle
+# Hier stecken oft lokale Pfade zum Android SDK drin:
+android/local.properties
+android/key.properties
 
-# Obfuscation related
-app.*.map.json
+# --- iOS ---
+*.xcworkspace
+xcuserdata/
+DerivedData/
+*.moved-aside
+*.xcuserstate
+# EXTREM WICHTIG: Enthält deine lokalen Mac-Pfade zum Flutter SDK
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/Flutter.podspec
+# Pods-Verzeichnis (wird durch flutter pub get/pod install neu erstellt)
+ios/Pods/
+ios/Podfile.lock
 
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+# --- IDEs ---
+.idea/
+.vscode/
+*.iml
+*.iws
+*.swp
+.DS_Store
+
+# --- Sonstiges ---
+node_modules/
+.env
+
+# --- Empfohlene Einträge für Flutter-Template
+.flutter-plugins
+.flutter-plugins-dependencies
+**/build/
+*.keystore
+*.jks
+android/.gradle/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/ephemeral/
+ios/ServiceDefinitions.json

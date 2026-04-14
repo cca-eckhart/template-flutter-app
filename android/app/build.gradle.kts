@@ -1,3 +1,7 @@
+// 1. WICHTIG: Füge diese Imports ganz oben in der Datei hinzu
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -6,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.erste_flutter_app"
+    namespace = "at.ac.htlinn.stud.htlinn_flutter_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -21,7 +25,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.erste_flutter_app"
+        applicationId = "at.ac.htlinn.stud.stratos2026"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
@@ -30,11 +34,36 @@ android {
         versionName = flutter.versionName
     }
 
+    // 2. Den signingConfigs Block anpassen
+    signingConfigs {
+        create("release") {
+            // WICHTIG: Hier muss jetzt "key.properties" stehen!
+            val keyPropertiesFile = rootProject.file("key.properties")
+            
+            if (keyPropertiesFile.exists()) {
+                val properties = Properties()
+                properties.load(FileInputStream(keyPropertiesFile))
+
+                // Gradle liest die Werte aus deiner Datei
+                storeFile = file(properties.getProperty("storeFile")) // app/upload-keystore.jks
+                storePassword = properties.getProperty("storePassword")
+                keyAlias = properties.getProperty("keyAlias")
+                keyPassword = properties.getProperty("keyPassword")
+            } else {
+                logger.warn("Warnung: key.properties nicht gefunden. Release-Builds werden nicht signiert.")
+            }
+        }
+    }
+
     buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+        getByName("release") {
+            // 3. Hier die Signatur verknüpfen
+            signingConfig = signingConfigs.getByName("release")
+            
+            // Standard Flutter-Einstellungen (shrinkResources, minify)
+            isMinifyEnabled = false
+            isShrinkResources = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 }
